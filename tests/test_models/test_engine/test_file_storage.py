@@ -107,3 +107,30 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def test_create_command_syntax(self):
+        """Test the command syntax for object creation"""
+        command = "create BaseModel name=\"My House\" age=25"
+        self.console.do_create(command)
+
+    def test_parameter_syntax(self):
+        """Test the parsing of parameters"""
+        command = "create BaseModel name=\"My House\" age=25"
+        params = self.console.extract_parameters(command)
+        expected_params = {'name': 'My House', 'age': 25}
+        self.assertEqual(params, expected_params)
+
+    def test_value_handling(self):
+        """Test the handling of different value types"""
+        command = "create BaseModel name=\"My House\" age=25 price=10.5"
+        self.console.do_create(command)
+
+    def test_error_handling(self):
+        """Test the handling of invalid parameters or values"""
+        command = "create BaseModel name=My House age=invalid price=10.5"
+        self.console.do_create(command)
+
+    def test_object_creation(self):
+        """Test the creation of objects with given parameters"""
+        command = "create BaseModel name=\"My House\" age=25"
+        self.console.do_create(command)
